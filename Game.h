@@ -8,6 +8,7 @@
 #include "IO.h"
 #include <time.h>
 #include <stdlib.h>
+#include <SDL2\sdl.h>
 
 // ------ Defines -----
 
