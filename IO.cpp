@@ -1,109 +1,106 @@
 #include "IO.h"
 
-SDL_Surface *screen;	// Screen
-static Uint32 colors[COLOR_MAX] = { 0x000000ff, 0xff0000ff, 0x00ff00ff, 0x0000ffff,
-0x00ffffff, 0xff00ffff, 0xffff00ff, 0xffffffff };
+//static Uint32 colors[COLOR_MAX] = { 0x000000ff, 0xff0000ff, 0x00ff00ff, 0x0000ffff,
+//0x00ffffff, 0xff00ffff, 0xffff00ff, 0xffffffff };
+
+//Window definition
+static GLFWwindow *window;
+
+//Window size
+const GLint WIDTH = 800;
+const GLint HEIGHT = 600;
+
 
 
 IO::IO(void)
 {
-	init_graph();
+	
 }
 
 void IO::draw_rectangle(int x_1, int y_1, int x_2, int y_2, color c)
 {
-	 
+	glBegin(GL_LINES);
+		//glColor3fv();
+		int w = x_2 - x_1;
+		int h = y_2 - y_1;
+		glVertex4i(x_1, y_1, w, h);
+	glEnd();
+
 }
 
-void IO::draw_rectangle(const SDL_Rect* rect, color c)
-{
-	SDL_FillRect(screen, rect, colors[c]);
-}
 
 void IO::clear_screen(void)
 {
-	SDL_FillRect(screen, NULL, 0x000000);
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f); //clear background screen to black
 }
 
 int IO::get_screen_height(void)
 {
-	return screen->h;
+	return HEIGHT;
 }
 
 int IO::init_graph(void)
 {
-	const SDL_VideoInfo *info;
-	Uint8  video_bpp;
-	Uint32 videoflags;
+	glfwInit();
 
-	// Initialize SDL
-	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-		fprintf(stderr, "Couldn't initialize SDL: %s\n", SDL_GetError());
-		return 1;
-	}
-	atexit(SDL_Quit);
+	window = glfwCreateWindow(WIDTH, HEIGHT, "Tetris", nullptr, nullptr);
 
-	// Alpha blending doesn't work well at 8-bit color
-	info = SDL_GetVideoInfo();
-	if (info->vfmt->BitsPerPixel > 8) {
-		video_bpp = info->vfmt->BitsPerPixel;
-	}
-	else {
-		video_bpp = 16;
-	}
-	videoflags = SDL_SWSURFACE | SDL_DOUBLEBUF;
+	int screenWidth, screenHeight;
 
-	// Set 640x480 video mode
-	screen = SDL_CreateWindow("My Game Window", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480, SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL);
-	if ((screen = SDL_SetVideoMode(640, 480, video_bpp, videoflags)) == NULL) {
-		fprintf(stderr, "Couldn't set %ix%i video mode: %s\n", 640, 480, SDL_GetError());
-		return 2;
+	glfwGetFramebufferSize(window, &screenWidth, &screenHeight);
+
+	if (nullptr == window)
+	{
+		printf("Failed to create GLFW window");
+		glfwTerminate();
+		return EXIT_FAILURE;
 	}
-	return 0;
+
+	glfwMakeContextCurrent(window);
+	glewExperimental = GL_TRUE;
+
+	if (GLEW_OK != glewInit())
+	{
+		printf("Failed to initialise GLEW");
+		return EXIT_FAILURE;
+	}
+
+	glViewport(0, 0, screenWidth, screenHeight);
+
+	while (!glfwWindowShouldClose(window))
+	{
+		glfwPollEvents();
+		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		//Draw openGL stuffs
+		glfwSwapBuffers(window);
+
+	}
+
+	glfwTerminate();
+
+	return EXIT_SUCCESS;
 }
 
 int IO::poll_key(void)
 {
-	SDL_Event event;
-	while (SDL_PollEvent(&event))
-	{
-		switch (event.type) {
-		case SDL_KEYDOWN:
-			return event.key.keysym.sym;
-		case SDL_QUIT:
-			exit(3);
-		}
-	}
-	return -1;
+	return 0;
 }
 
 int IO::get_key(void)
 {
-	SDL_Event event;
-	while (true)
-	{
-		SDL_WaitEvent(&event);
-		if (event.type == SDL_KEYDOWN)
-			break;
-		if (event.type == SDL_QUIT)
-			exit(3);
-	};
-	return event.key.keysym.sym;
+	return 0;
 }
 
 int IO::is_key_down(int key)
 {
-	const Uint8* key_table;
-	int num_key;
-
-	SDL_PumpEvents();
-	key_table = SDL_GetKeyboardState(&num_key);
-	return key_table[key];
+	return 0;
 }
 
 void IO::update_screen(void)
 {
-	SDL_RenderPresent();
+	glfwSwapBuffers(window);
 }
 
 

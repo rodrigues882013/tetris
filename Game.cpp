@@ -46,19 +46,12 @@ void Game::draw_piece(int p_x, int p_y, int p_piece, int rotation)
 
 			if (piece->get_block_type(p_piece, rotation, j, i) != 0)
 			{
-				
-				SDL_Rect rect;
-				rect.x = pixel_x + i * BLOCK_SIZE;
-				rect.y = pixel_y + j * BLOCK_SIZE;
-				rect.w = pixel_x + i * BLOCK_SIZE;
-				rect.h = (pixel_y + i * BLOCK_SIZE + BLOCK_SIZE - 1) - 1;
 
-				/*io->draw_rectangle((pixel_x + i * BLOCK_SIZE),
+				io->draw_rectangle((pixel_x + i * BLOCK_SIZE),
 					               (pixel_y + j * BLOCK_SIZE),
 					               (pixel_x + i * BLOCK_SIZE) + BLOCK_SIZE - 1,
 					               (pixel_y + i * BLOCK_SIZE) + BLOCK_SIZE - 1,
-					               color);*/
-				io->draw_rectangle(rect, color);
+					               color);
 			}
 		}
 	}
@@ -81,19 +74,13 @@ void Game::draw_board(void)
 		{
 			if (board->is_free_block(i, j))
 			{
-				SDL_Rect rect;
-				rect.x = x_1 + i * BLOCK_SIZE;
-				rect.y = y + j * BLOCK_SIZE;
-				rect.w = (x_1 + i * BLOCK_SIZE) + BLOCK_SIZE - 1;
-				rect.h = ((y + j * BLOCK_SIZE) + BLOCK_SIZE - 1) - 1;
 
-				/*io->draw_rectangle((x_1 + i * BLOCK_SIZE),
+				io->draw_rectangle((x_1 + i * BLOCK_SIZE),
 					(y + j * BLOCK_SIZE),
 					(x_1 + i * BLOCK_SIZE) + BLOCK_SIZE - 1,
 					(y + j * BLOCK_SIZE) + BLOCK_SIZE - 1,
-					RED);*/
+					RED);
 
-				io->draw_rectangle(rect, RED);
 			}
 		}
 	}

@@ -1,14 +1,18 @@
 #ifndef _IO_
 #define _IO_
 
-// ------ Includes -----
 
-
-#include <SDL2/SDL.h>   
+//General Includes
+#include <stdlib.h>
 #include <stdio.h>
-#include <stdlib.h>  
 
-#pragma comment (lib, "SDL2/lib/SDL.lib")
+//GLEW
+#define GLEW_STATIC 
+#include <GL/glew.h>
+
+//GLFW
+#include <GLFW/glfw3.h>
+
 
 enum color { BLACK, RED, GREEN, BLUE, CYAN, MAGENTA, YELLOW, WHITE, COLOR_MAX }; // Colors
 
@@ -18,7 +22,6 @@ class IO
 	public:
 		IO(void);
 		void draw_rectangle(int, int, int, int, enum color);
-		void draw_rectangle(const SDL_Rect*, enum color);
 		void clear_screen(void);
 		int get_screen_height(void);
 		int init_graph(void);
