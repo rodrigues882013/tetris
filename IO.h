@@ -5,6 +5,7 @@
 //General Includes
 #include <stdlib.h>
 #include <stdio.h>
+#include "Board.h"
 
 //GLEW
 #define GLEW_STATIC 
@@ -18,7 +19,15 @@ enum color { BLACK, RED, GREEN, BLUE, CYAN, MAGENTA, YELLOW, WHITE, COLOR_MAX };
 
 class IO
 {
-	
+	private:
+		//Window definition
+		GLFWwindow *window;
+
+		//Window size
+		const GLint WIDTH = 800;
+		const GLint HEIGHT = 600;
+		Board *board;
+
 	public:
 		IO(void);
 		void draw_rectangle(int, int, int, int, enum color);
@@ -29,8 +38,10 @@ class IO
 		int get_key(void);
 		int is_key_down(int);
 		void update_screen(void);
-
-
+		void calculate_coordinates(int, int, int, int, int*, int*, int*, int*);
+		const char* create_shaders(char);
+		void key_press_handle(GLFWwindow*, int, int, int, int);
+		void set_board(Board*);
 };
 
 #endif

@@ -283,8 +283,6 @@ int pieces_initial_position[7][4][2] =
 	},
 };
 
-Piece::Piece(char* piece_name) : piece_name(piece_name) { }
-
 //Definition of methods of class
 int Piece::get_block_type(int piece, int rotation, int x, int y)
 {

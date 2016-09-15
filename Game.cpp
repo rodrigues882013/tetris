@@ -1,5 +1,6 @@
 #include "Game.h"
 
+
 Game::Game(Board* board, Piece* piece, IO* io, int screen_height) : board(board), piece(piece), io(io), screen_height(screen_height) { }
 
 
