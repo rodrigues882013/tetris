@@ -1,7 +1,10 @@
 #include "Game.h"
 
 
-Game::Game(Board* board, Piece* piece, IO* io, int screen_height) : board(board), piece(piece), io(io), screen_height(screen_height) { }
+Game::Game(Board* board, Piece* piece, IO* io, int screen_height) : board(board), piece(piece), io(io), screen_height(screen_height)
+{
+	init_game();
+}
 
 
 int Game::get_rand(int p_a, int p_b)

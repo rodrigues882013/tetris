@@ -18,7 +18,7 @@ void key_press_handle(GLFWwindow*, int, int, int, int);
 Board *b;
 Game *g;
 
-int main()
+int main(int argc, char *argv[])
 {
 	IO io;
 	int screen_height = io.get_screen_height();
